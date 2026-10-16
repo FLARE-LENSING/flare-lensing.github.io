@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FLARE · FMM Lensing And Ray-tracing Engine</title>
+  <meta name="description" content="FLARE turns particle-based cosmological simulations into strong gravitational lensing observables. Developed at the Institute for Computational Cosmology, Durham University.">
+  <meta property="og:title" content="FLARE · FMM Lensing And Ray-tracing Engine">
+  <meta property="og:description" content="Strong-lensing mocks from cosmological simulations.">
+  <meta property="og:image" content="https://flare-lensing.github.io/assets/flare-logo.jpg">
+  <meta property="og:url" content="https://flare-lensing.github.io/">
+  <meta name="theme-color" content="#05060a">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <style>
+    :root {
+      --bg: #05060a;
+      --surface: #0e1018;
+      --border: #22263a;
+      --text: #e9e6e1;
+      --muted: #a3a0b0;
+      --accent: #f5a35c;
+      --accent-soft: rgba(245, 163, 92, 0.12);
+      --max: 60rem;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font: 1.0625rem/1.65 system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
+    a:hover { text-decoration-thickness: 2px; }
+    a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 1rem; }
+
+    nav {
+      position: sticky; top: 0; z-index: 10;
+      background: rgba(5, 6, 10, 0.85);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+    }
+    nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1rem; height: 3.25rem; }
+    nav .brand { color: var(--text); text-decoration: none; font-weight: 600; letter-spacing: 0.25em; }
+    nav ul { display: flex; gap: 1.25rem; list-style: none; margin: 0; padding: 0; font-size: 0.9375rem; }
+    nav ul a { color: var(--muted); text-decoration: none; }
+    nav ul a:hover { color: var(--text); }
+
+    header.hero { text-align: center; padding: 2.5rem 0 3rem; }
+    header.hero img { width: min(100%, 34rem); height: auto; display: block; margin: 0 auto; }
+    header.hero h1 {
+      font-size: clamp(1.35rem, 3.5vw, 1.9rem); font-weight: 500; line-height: 1.3;
+      margin: 1.75rem auto 0.75rem; max-width: 36rem;
+    }
+    header.hero p { color: var(--muted); margin: 0 auto; max-width: 38rem; }
+
+    section { padding: 3rem 0; border-top: 1px solid var(--border); }
+    h2 {
+      font-size: 0.8125rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--accent); margin: 0 0 1.25rem;
+    }
+    section > .wrap > p { max-width: 44rem; }
+
+    .outputs { display: flex; flex-wrap: wrap; gap: 0.5rem; list-style: none; padding: 0; margin: 1.5rem 0 0; }
+    .outputs li {
+      background: var(--accent-soft); color: var(--text);
+      border: 1px solid rgba(245, 163, 92, 0.3); border-radius: 999px;
+      padding: 0.25rem 0.85rem; font-size: 0.9375rem;
+    }
+
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 1rem; }
+    .card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 0.75rem;
+      padding: 1.25rem 1.25rem 1.1rem;
+    }
+    .card h3 { margin: 0 0 0.5rem; font-size: 1.0625rem; }
+    .card p { margin: 0; color: var(--muted); font-size: 0.96875rem; }
+    .card .tag {
+      display: inline-block; margin-top: 0.9rem; font-size: 0.8125rem; color: var(--accent);
+      letter-spacing: 0.04em;
+    }
+
+    footer { border-top: 1px solid var(--border); padding: 2rem 0 2.5rem; color: var(--muted); font-size: 0.9375rem; }
+    footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; }
+    footer p { margin: 0; }
+
+    @media (max-width: 34rem) {
+      nav ul { gap: 0.9rem; font-size: 0.875rem; }
+      section { padding: 2.25rem 0; }
+    }
+  </style>
+</head>
+<body>
+  <nav aria-label="Main">
+    <div class="wrap">
+      <a class="brand" href="#top">FLARE</a>
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#code">Code</a></li>
+        <li><a href="#papers">Papers</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main id="top">
+    <header class="hero">
+      <div class="wrap">
+        <img src="assets/flare-logo.jpg" width="900" height="740"
+             alt="FLARE logo: a spiral galaxy with lensed arcs of light around it, above the words FMM Lensing And Ray-tracing Engine">
+        <h1>Strong-lensing mocks from cosmological simulations</h1>
+        <p>A ray-tracing engine that turns the particles of a cosmological simulation into the
+          images and maps an observer of a strong gravitational lens would see.</p>
+      </div>
+    </header>
+
+    <section id="about" aria-labelledby="about-h">
+      <div class="wrap">
+        <h2 id="about-h">About</h2>
+        <p><strong>FLARE</strong> (FMM Lensing And Ray-tracing Engine) computes the gravitational
+          field of a simulated galaxy or cluster with a fast multipole (FMM) solver built on the
+          <a href="https://swift.strw.leidenuniv.nl/">SWIFT</a> code, then traces light from
+          background sources through it. It works directly with particle-based simulations such as
+          SWIFT, COLIBRE and FLAMINGO, so the lenses inherit the full complexity of galaxy
+          formation, including baryons, substructure and line-of-sight structure, rather than an
+          idealised analytic profile.</p>
+        <p>The engine is designed so that the deflection field and its derivatives stay smooth
+          and consistent with one another. Lensed images and magnification maps are then free of
+          artefacts from the underlying grid. This matters when simulated lenses are used to
+          train and test machine-learning inference, because a network can otherwise learn the
+          grid instead of the physics.</p>
+        <ul class="outputs" aria-label="What FLARE produces">
+          <li>Lensed images</li>
+          <li>Convergence &amp; shear maps</li>
+          <li>Magnification maps</li>
+          <li>Critical curves &amp; caustics</li>
+          <li>Image positions</li>
+          <li>Time delays</li>
+          <li>Multi-plane lightcones</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="code" aria-labelledby="code-h">
+      <div class="wrap">
+        <h2 id="code-h">Code</h2>
+        <div class="cards">
+          <article class="card">
+            <h3>FLARE</h3>
+            <p>The core engine: projection of the FMM field onto lens planes, smooth
+              interpolation, adaptive single- and multi-plane ray tracing, lensing maps, image
+              finding and time delays.</p>
+            <span class="tag">Core engine</span>
+          </article>
+          <article class="card">
+            <h3>FLARE-DEVELOPMENT</h3>
+            <p>The full feature set: survey and instrument layers (PSFs, noise, coadds),
+              weak-lensing catalogues, microlensing, wave optics, radio interferometry and
+              simulation I/O. Features move into the core once they mature.</p>
+            <span class="tag">Development line</span>
+          </article>
+          <article class="card">
+            <h3>FLARE-SBI</h3>
+            <p>A controlled benchmark of model misspecification in simulation-based inference
+              of dark-matter substructure, using galaxies from the COLIBRE hydrodynamical
+              simulations rendered with FLARE.</p>
+            <span class="tag">Inference benchmark</span>
+          </article>
+        </div>
+        <p style="margin-top:1.5rem;color:var(--muted)">The code is in active development and
+          will be released alongside the papers below.</p>
+      </div>
+    </section>
+
+    <section id="papers" aria-labelledby="papers-h">
+      <div class="wrap">
+        <h2 id="papers-h">Papers</h2>
+        <div class="cards">
+          <article class="card">
+            <h3>The FLARE algorithm</h3>
+            <p>The core ray-tracing method and its accuracy against direct summation.</p>
+            <span class="tag">In preparation</span>
+          </article>
+          <article class="card">
+            <h3>Model misspecification in substructure inference</h3>
+            <p>Testing simulation-based substructure inference on realistic simulated lenses.</p>
+            <span class="tag">In preparation</span>
+          </article>
+          <article class="card">
+            <h3>The full FLARE feature set</h3>
+            <p>Survey layers, multi-plane lightcones, microlensing, wave optics and more.</p>
+            <span class="tag">In preparation</span>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <p>Developed at the <a href="https://astro.dur.ac.uk/ICC/">Institute for Computational Cosmology</a>, Durham University,<br>
+        on the DiRAC@Durham (COSMA) facility.</p>
+      <p><a href="https://github.com/FLARE-LENSING">github.com/FLARE-LENSING</a></p>
+    </div>
+  </footer>
+</body>
+</html>
